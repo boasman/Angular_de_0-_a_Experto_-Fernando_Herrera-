@@ -1,5 +1,6 @@
 import { Component, input, OnInit, output } from '@angular/core';
 import { GifListItemComponent } from '../gif-list-item/gif-list-item.component';
+import { Gif } from '../../interfaces/gir.interface';
 
 @Component({
   standalone: true,
@@ -10,7 +11,7 @@ import { GifListItemComponent } from '../gif-list-item/gif-list-item.component';
 })
 export class GifListComponent implements OnInit {
   // stringUrlOutput = output<string[]>();
-  gifs = input.required<string[]>();
+  gifs = input.required<Gif[]>();
 
   constructor() {
     // if(this.stringUrlInput()){
