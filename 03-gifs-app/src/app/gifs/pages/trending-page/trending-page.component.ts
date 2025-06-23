@@ -1,5 +1,6 @@
 import { TODO } from './../../../../../node_modules/mini-css-extract-plugin/types/hmr/hotModuleReplacement.d';
 import {
+  AfterViewInit,
   asNativeElements,
   Component,
   ElementRef,
@@ -9,6 +10,7 @@ import {
   viewChild,
 } from '@angular/core';
 import { GifService } from '../../services/gifs.service';
+import { ScrollStateService } from '../../shared/services/scroll-state.service';
 
 @Component({
   standalone: true,
@@ -17,8 +19,12 @@ import { GifService } from '../../services/gifs.service';
   styleUrls: ['./trending-page.component.css'],
   // imports: [GifListComponent],
 })
-export default class TrendingPageComponent {
+export default class TrendingPageComponent implements AfterViewInit {
+  ngAfterViewInit(): void {
+    throw new Error('Method not implemented.');
+  }
   gifService = inject(GifService);
+  ScrollStateService = inject(ScrollStateService)
   scrollDivRef = viewChild<ElementRef<HTMLDivElement>>('groupDiv');
 
   onScroll(event: Event) {
@@ -32,6 +38,8 @@ export default class TrendingPageComponent {
     console.log({scrollTotal: scrollTop + clientHeight, scrollHeigth});
 
     const isAtBottom = scrollTop + clientHeight + 300 >= scrollHeigth
+
+    this.ScrollStateService.trendingScrollState.set(scrollTop);
 
     console.log({isAtBottom})
 
