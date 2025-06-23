@@ -9,6 +9,13 @@ import { Gif } from '../interfaces/gir.interface';
 import { map, tap } from 'rxjs';
 import { JsonPipe } from '@angular/common';
 
+const loadFromLocalStorage = () => {
+  const gifsFromLocalStorage = localStorage.getItem('gifs') ?? '{}';
+  const gifs = JSON.parse(gifsFromLocalStorage);
+  console.log(gifs);
+  return gifs;
+};
+
 @Injectable({ providedIn: 'root' })
 export class GifService {
   trendingGifs = signal<Gif[]>([]);
@@ -16,7 +23,7 @@ export class GifService {
 
   private http = inject(HttpClient);
 
-  searchHistory = signal<Record<string, Gif[]>>({});
+  searchHistory = signal<Record<string, Gif[]>>(loadFromLocalStorage());
   searchHistoryKeys = computed(() => Object.keys(this.searchHistory()));
 
   constructor() {
@@ -68,6 +75,6 @@ export class GifService {
   }
 
   getHistoryGifs(query: string): Gif[] {
-    return this.searchHistory()[query] ?? [];
+    return loadFromLocalStorage()[query] ?? [];
   }
 }
