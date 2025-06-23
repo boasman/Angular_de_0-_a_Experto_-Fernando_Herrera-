@@ -10,13 +10,10 @@ import { Gif } from '../../interfaces/gir.interface';
   imports: [GifListItemComponent],
 })
 export class GifListComponent implements OnInit {
-  // stringUrlOutput = output<string[]>();
+
   gifs = input.required<Gif[]>();
 
   constructor() {
-    // if(this.stringUrlInput()){
-    //   this.stringUrlOutput.emit(this.stringUrlInput());
-    // }
   }
 
   ngOnInit() {}

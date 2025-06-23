@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { GifService } from '../../services/gifs.service';
 
 
 interface MenuOption {
@@ -17,6 +18,8 @@ interface MenuOption {
     standalone: true
 })
 export class GifsSideMenuOptionsComponent implements OnInit {
+
+  giServices = inject(GifService);
 
   constructor() { }
 

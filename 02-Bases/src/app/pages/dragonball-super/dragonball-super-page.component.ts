@@ -4,6 +4,7 @@ import { DragonballCharacterAddComponent } from '../../components/dragonball/dra
 import { DragonballService } from '../../services/dragonball.service';
 
 @Component({
+  standalone: true,
   templateUrl: './dragonball-super-page.component.html',
   selector: 'dragonball-super',
   imports: [CharacterListComponent, DragonballCharacterAddComponent],

@@ -3,6 +3,7 @@ import { Character } from '../../../interfaces/character.interfaces';
 
 
 @Component({
+  standalone:true,
   selector: 'dragonball-character-list',
   templateUrl: './character-list.component.html'
 })
