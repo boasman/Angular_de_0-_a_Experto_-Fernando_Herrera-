@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import { GifsSideMenuComponent } from "../../components/gifs-side-menu/gifs-side-menu.component";
+import { GifsSideMenuComponent } from "../../components/side-menu/gifs-side-menu.component";
 import { RouterOutlet } from '@angular/router';
 
 @Component({
