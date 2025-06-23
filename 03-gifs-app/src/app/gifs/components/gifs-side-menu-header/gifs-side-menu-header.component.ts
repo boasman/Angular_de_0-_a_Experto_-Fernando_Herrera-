@@ -1,9 +1,13 @@
+// import { environment } from '../../../../environments/environment.development';
 import { Component, OnInit } from '@angular/core';
+import { environment } from 'src/environments/environment';
+
 
 @Component({
-  selector: 'app-gifs-side-menu-header',
-  templateUrl: './gifs-side-menu-header.component.html',
-  styleUrls: ['./gifs-side-menu-header.component.css']
+    selector: 'app-gifs-side-menu-header',
+    templateUrl: './gifs-side-menu-header.component.html',
+    styleUrls: ['./gifs-side-menu-header.component.css'],
+    standalone: true
 })
 export class GifsSideMenuHeaderComponent implements OnInit {
 
@@ -11,5 +15,7 @@ export class GifsSideMenuHeaderComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  envs =  environment
 
 }
