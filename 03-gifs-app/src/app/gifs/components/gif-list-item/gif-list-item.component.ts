@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, input, OnInit, signal } from '@angular/core';
 
 @Component({
   standalone: true,
@@ -12,5 +12,9 @@ export class GifListItemComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  imageUrls = input.required<string>();
+
+
 
 }
