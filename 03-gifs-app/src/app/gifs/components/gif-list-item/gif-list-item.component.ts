@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
+  standalone: true,
   selector: 'app-gif-list-item',
   templateUrl: './gif-list-item.component.html',
   styleUrls: ['./gif-list-item.component.css']
