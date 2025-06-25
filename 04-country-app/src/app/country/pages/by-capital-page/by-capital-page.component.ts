@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { CountryListComponent } from '../../components/country-list/country-list.component';
 import { CountrySearchInputComponent } from '../../components/country-search-input/country-search-input.component';
+import { CountryService } from '../../services/country.service';
 
 @Component({
   standalone: true,
@@ -10,6 +11,8 @@ import { CountrySearchInputComponent } from '../../components/country-search-inp
   imports: [CountryListComponent, CountrySearchInputComponent],
 })
 export class ByCapitalPageComponent implements OnInit {
+
+  searchByCapitalPage = inject(CountryService);
   constructor() { }
 
   ngOnInit() { }
