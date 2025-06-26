@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  standalone: true,
-  imports: [],
-  selector: 'app-country-page',
-  templateUrl: './country-page.component.html',
-  styleUrls: ['./country-page.component.css']
+    imports: [],
+    selector: 'app-country-page',
+    templateUrl: './country-page.component.html',
+    styleUrls: ['./country-page.component.css']
 })
 export class CountryPageComponent implements OnInit {
 

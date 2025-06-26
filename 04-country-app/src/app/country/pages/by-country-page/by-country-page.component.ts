@@ -3,11 +3,10 @@ import { CountrySearchInputComponent } from "../../components/country-search-inp
 import { CountryListComponent } from "../../components/country-list/country-list.component";
 
 @Component({
-  standalone: true,
-  imports: [CountrySearchInputComponent, CountryListComponent],
-  selector: 'app-by-country-page',
-  templateUrl: './by-country-page.component.html',
-  styleUrls: ['./by-country-page.component.css']
+    imports: [CountrySearchInputComponent, CountryListComponent],
+    selector: 'app-by-country-page',
+    templateUrl: './by-country-page.component.html',
+    styleUrls: ['./by-country-page.component.css']
 })
 export class ByCountryPageComponent implements OnInit {
 

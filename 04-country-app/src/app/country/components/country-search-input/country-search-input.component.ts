@@ -1,11 +1,11 @@
 import { Component, input, OnInit, output } from '@angular/core';
 
 @Component({
-  standalone: true,
-  imports: [],
-  selector: 'app-country-search-input',
-  templateUrl: './country-search-input.component.html',
-  styleUrls: ['./country-search-input.component.css'],
+    standalone: true,
+    imports: [],
+    selector: 'app-country-search-input',
+    templateUrl: './country-search-input.component.html',
+    styleUrls: ['./country-search-input.component.css']
 })
 export class CountrySearchInputComponent implements OnInit {
   constructor() {}
