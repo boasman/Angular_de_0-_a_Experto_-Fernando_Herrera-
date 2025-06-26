@@ -1,8 +1,9 @@
-import { Component, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, resource, signal } from '@angular/core';
 import { CountryListComponent } from '../../components/country-list/country-list.component';
 import { CountrySearchInputComponent } from '../../components/country-search-input/country-search-input.component';
 import { CountryService } from '../../services/country.service';
-import { Country } from '../../interfaces/country.interfaces';
+import {rxResource} from '@angular/core/rxjs-interop'
+import { of } from 'rxjs';
 
 @Component({
   standalone: true,
@@ -14,14 +15,37 @@ import { Country } from '../../interfaces/country.interfaces';
 export class ByCapitalPageComponent implements OnInit {
 
   countryService = inject(CountryService);
+  query  = signal('');
+
+    //CON OBSERVABLE
+    countryResource  =  rxResource({
+    request: () => ({query : this.query()}),
+    loader: ({request}) => {
+
+      if(!request.query) return of([]);
+
+      return this.countryService.searchByCapital(request.query)
+
+    }
+  });
+
+  //CON PROMESA
 
   // countryResource  =  resource({
+  //   request: () => ({query : this.query()}),
+  //   loader: async({request}) => {
 
-  // })
+  //     if(!request.query) return [];
 
-  isLoading = signal(false);
-  isError = signal<string | null>(null);
-  countries = signal<Country[]>([]);
+  //     return await firstValueFrom(
+  //       this.countryService.searchByCapital(request.query)
+  //     )
+  //   }
+  // });
+
+  // isLoading = signal(false);
+  // isError = signal<string | null>(null);
+  // countries = signal<Country[]>([]);
 
   constructor() { }
 
@@ -29,28 +53,28 @@ export class ByCapitalPageComponent implements OnInit {
 
 
 
-  onSearch(value: any) {
+  // onSearch(value: any) {
 
-    if(this.isLoading()) return
+  //   if(this.isLoading()) return
 
-    this.isError.set(null);
+  //   this.isError.set(null);
 
 
-    this.countryService.searchByCapital(value)
-    .subscribe({
-      next: (countries) => {
-        this.isLoading.set(false);
-        this.countries.set(countries);
-      },
-      error : (err) => {
-        console.log(err);
-        this.isLoading.set(false);
-        this.countries.set([]);
-        this.isError.set(err)
-      }
-    })
+  //   this.countryService.searchByCapital(value)
+  //   .subscribe({
+  //     next: (countries) => {
+  //       this.isLoading.set(false);
+  //       this.countries.set(countries);
+  //     },
+  //     error : (err) => {
+  //       console.log(err);
+  //       this.isLoading.set(false);
+  //       this.countries.set([]);
+  //       this.isError.set(err)
+  //     }
+  //   })
 
-  }
+  // }
 }
 
 
