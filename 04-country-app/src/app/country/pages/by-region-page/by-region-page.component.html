@@ -1,2 +1,24 @@
+<h1>Por region</h1>
+<h3>Seleccione una region</h3>
 
-<app-country-list [countries]="[]"></app-country-list>
+<section class="row mt-2">
+  <div class="flex-col">
+    @for (region of regions; track region) {
+      <button
+      class="btn btn-outline mr-2 w-[100]"
+      [class.btn-primary]="selecteRegion() === region"
+      (click)="selecteRegion.set(region)"
+      [value]="query()">
+        {{region}}
+      </button>
+    }
+  </div>
+</section>
+
+<app-country-list
+  [countries]="regionResource.value() ?? []"
+  [errorMessage]="regionResource.error()"
+  [isEmpty]="regionResource.value()?.length === 0"
+  [isLoading]="regionResource.isLoading()"
+>
+</app-country-list>

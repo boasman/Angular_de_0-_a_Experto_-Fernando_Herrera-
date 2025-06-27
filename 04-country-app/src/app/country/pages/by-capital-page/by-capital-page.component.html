@@ -1,6 +1,8 @@
 <app-country-search-input
   placeholder="Buscar por capital"
   (value)="query.set($event)"
+  [debounceTime]="1000"
+  [initialValue]="query()"
 ></app-country-search-input>
 
 <app-country-list
