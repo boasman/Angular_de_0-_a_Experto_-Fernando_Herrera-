@@ -1,5 +1,6 @@
 import { DatePipe, LowerCasePipe, TitleCasePipe, UpperCasePipe } from '@angular/common';
-import { Component, effect, OnInit, signal } from '@angular/core';
+import { Component, effect, inject, OnInit, signal } from '@angular/core';
+import { AvaliableLocale, LocaleService } from '../../services/locale.service';
 
 @Component({
   standalone: true,
@@ -14,6 +15,8 @@ import { Component, effect, OnInit, signal } from '@angular/core';
   styleUrls: ['./basic-page.component.css']
 })
 export default class BasicPageComponent implements OnInit {
+
+  localeService = inject(LocaleService);
 
   constructor() { }
 
@@ -38,5 +41,10 @@ export default class BasicPageComponent implements OnInit {
 
 
   })
+
+  changeLocale(locale: AvaliableLocale){
+    console.log({locale});
+    this.localeService.changLocale(locale);
+  }
 
 }
