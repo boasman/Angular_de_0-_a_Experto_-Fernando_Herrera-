@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { CountryListComponent } from "../../components/country-list/country-list.component";
+import { Country } from '../../interfaces/country.interfaces';
 
 @Component({
     standalone: true,
@@ -14,5 +15,7 @@ export class ByRegionPageComponent implements OnInit {
 
   ngOnInit() {
   }
+
+  country = signal<Country[]>([]);
 
 }
