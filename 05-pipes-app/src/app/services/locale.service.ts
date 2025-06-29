@@ -9,7 +9,11 @@ export type AvaliableLocale = 'es'|'fr'|'en';
 })
 export class LocaleService {
 
-constructor() { }
+constructor() {
+  this.currentLocale.set(
+    (localStorage.getItem('locale') as AvaliableLocale) ?? 'es'
+  )
+ }
 
 private currentLocale = signal<AvaliableLocale>('fr');
 
@@ -19,7 +23,9 @@ get getLocal(){
 };
 
 changLocale(locale: AvaliableLocale){
+  localStorage.setItem('locale', locale);
   this.currentLocale.set(locale);
+  window.location.reload();
 }
 
 }

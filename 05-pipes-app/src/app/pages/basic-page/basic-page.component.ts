@@ -1,5 +1,5 @@
 import { DatePipe, LowerCasePipe, TitleCasePipe, UpperCasePipe } from '@angular/common';
-import { Component, effect, inject, OnInit, signal } from '@angular/core';
+import { Component, effect, inject, LOCALE_ID, OnInit, signal } from '@angular/core';
 import { AvaliableLocale, LocaleService } from '../../services/locale.service';
 
 @Component({
@@ -17,6 +17,7 @@ import { AvaliableLocale, LocaleService } from '../../services/locale.service';
 export default class BasicPageComponent implements OnInit {
 
   localeService = inject(LocaleService);
+  currentLocal = signal(inject(LOCALE_ID)) ;
 
   constructor() { }
 
@@ -43,7 +44,7 @@ export default class BasicPageComponent implements OnInit {
   })
 
   changeLocale(locale: AvaliableLocale){
-    console.log({locale});
+    console.log({locale: locale});
     this.localeService.changLocale(locale);
   }
 
