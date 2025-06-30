@@ -115,5 +115,6 @@ export default class UncommonPageComponent implements OnInit {
   myObservabletimer  = interval(2000).pipe(
 
     tap((value)  =>  console.log("tab:", value))
+
   )
 }
