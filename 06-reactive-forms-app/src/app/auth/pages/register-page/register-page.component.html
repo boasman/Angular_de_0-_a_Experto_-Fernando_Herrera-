@@ -107,14 +107,13 @@
             type="password"
             class="form-control"
             placeholder="Confirmar la contraseña"
-            formControlName="password2"
+            formControlName="confirPassword"
           />
 
-          @if(formUtils.isValidField(myForm, 'password2')){
-
+          @if(formUtils.isValidField(myForm, 'confirPassword')){
 
                     <span class="form-text text-danger">
-            {{ formUtils.getFieldError(myForm, "password2") }}</span
+            {{ formUtils.getFieldError(myForm, "confirPassword") }}</span
           >
 
           <!-- <span class="form-text text-danger">
@@ -155,4 +154,4 @@
 <pre>{{ myForm.controls["password"].errors | json }}</pre>
 
 <h5>Confirmar</h5>
-<pre>{{ myForm.controls["password2"].errors | json }}</pre>
+<pre>{{ myForm.controls["confirPassword"].errors | json }}</pre>
