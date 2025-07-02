@@ -3,7 +3,7 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CountryService } from '../../services/country.service';
 import { JsonPipe } from '@angular/common';
 import { Country } from '../../../interfaces/country.interfaces';
-import { switchMap, tap } from 'rxjs';
+import { count, filter, pipe, switchMap, tap } from 'rxjs';
 
 @Component({
   standalone: true,
@@ -34,12 +34,31 @@ export class CountryPageComponent implements OnInit {
 
   onFormchanged = effect((onCleanup) => {
     const regionSubscription = this.onRegionChange();
+    const countrySubscription = this.onCountryChanged();
 
     onCleanup(() => {
       regionSubscription.unsubscribe();
+      countrySubscription.unsubscribe();
       console.log('limpiado');
     });
   });
+
+  onCountryChanged() {
+    return this.myForm
+      .get('country')!
+      .valueChanges.pipe(
+        tap(() => this.myForm.get('border')!.setValue('')),
+        filter(value => value!.length > 0),
+        switchMap((alphaCode) =>
+          this.countryService.getCountryByAlphaCode(alphaCode!)
+        ),
+        switchMap(country => this.countryService.getCountryNameByCodeArray(country.borders))
+      )
+      .subscribe((bordes) => {
+        console.log(bordes);
+        this.borders.set(bordes);
+      });
+  }
 
   onRegionChange() {
     return this.myForm
@@ -56,9 +75,9 @@ export class CountryPageComponent implements OnInit {
         )
       )
       .subscribe((countries) => {
-        console.log({countries})
+        console.log({ countries });
         this.countryByRegion.set(countries);
-        console.log("senal country by region", this.countryByRegion())
+        console.log('senal country by region', this.countryByRegion());
       });
   }
 
