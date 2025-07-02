@@ -12,13 +12,21 @@
           <input
             type="text"
             class="form-control"
-            placeholder="Nombre del usuario"
+            placeholder="Nombre y apellido"
             formControlName="name"
           />
 
+          @if(formUtils.isValidField(myForm, 'name')){
+
           <span class="form-text text-danger">
+            Debe ingresar nombre y apellido
+            <!-- {{ formUtils.getFieldError(myForm, "name") }} --> </span
+          >
+
+          <!-- <span class="form-text text-danger">
             Debe de ser en formato de nombre y apellido
-          </span>
+          </span> -->
+          }
         </div>
       </div>
 
@@ -30,11 +38,17 @@
             type="email"
             class="form-control"
             placeholder="Email del usuario"
-             formControlName="email"
+            formControlName="email"
           />
+
+          @if(formUtils.isValidField(myForm, 'email')){
           <span class="form-text text-danger">
+            {{ formUtils.getFieldError(myForm, "email") }}</span
+          >
+          <!-- <span class="form-text text-danger">
             mensaje de error del email
-          </span>
+          </span> -->
+          }
         </div>
       </div>
 
@@ -46,11 +60,18 @@
             type="text"
             class="form-control"
             placeholder="Nombre código del usuario"
-             formControlName="username"
+            formControlName="username"
           />
+
+          @if(formUtils.isValidField(myForm, 'username')){
+
           <span class="form-text text-danger">
+            {{ formUtils.getFieldError(myForm, "username") }}</span
+          >
+          <!-- <span class="form-text text-danger">
             El username no puede ser Strider
-          </span>
+          </span> -->
+          }
         </div>
       </div>
 
@@ -62,12 +83,19 @@
             type="password"
             class="form-control"
             placeholder="Password de su cuenta"
-             formControlName="password"
+            formControlName="password"
           />
 
+          @if(formUtils.isValidField(myForm, 'password')){
+
           <span class="form-text text-danger">
+            {{ formUtils.getFieldError(myForm, "password") }}</span
+          >
+
+          <!-- <span class="form-text text-danger">
             La contraseña debe de ser mayor de 6 caracteres.
-          </span>
+          </span> -->
+          }
         </div>
       </div>
 
@@ -79,12 +107,20 @@
             type="password"
             class="form-control"
             placeholder="Confirmar la contraseña"
-             formControlName="Password2"
+            formControlName="password2"
           />
 
-          <span class="form-text text-danger">
+          @if(formUtils.isValidField(myForm, 'password2')){
+
+
+                    <span class="form-text text-danger">
+            {{ formUtils.getFieldError(myForm, "password2") }}</span
+          >
+
+          <!-- <span class="form-text text-danger">
             Las contraseñas deben de ser iguales
-          </span>
+          </span> -->
+          }
         </div>
       </div>
 
@@ -97,23 +133,26 @@
   </div>
 </div>
 
-<h2>Form Valid: {{myForm.valid}}</h2>
-<h2>Form Status: {{myForm.value}}</h2>
-<h2>Form Pending: {{myForm.}}</h2>
-<h2>Form errors: {{myForm.error}}</h2>
-<pre>{{ "formulario" | json }}</pre>
+<h2>Form Valid: {{ myForm.valid }}</h2>
+<h2>Form Status: {{ myForm.status }}</h2>
+<h2>Form Pending: {{ myForm.pending }}</h2>
+<h2>Form errors:</h2>
+<pre>{{ myForm.errors | json }}</pre>
+
+<h2>Form value:</h2>
+<pre>{{ myForm.value | json }}</pre>
 
 <h5>Nombre</h5>
-<pre>{{ myForm.controls["name"].value  | json }}</pre>
+<pre>{{ myForm.controls["name"].errors | json }}</pre>
 
 <h5>Email</h5>
-<pre>{{ myForm.controls["email"].value   | json }}</pre>
+<pre>{{ myForm.controls["email"].errors | json }}</pre>
 
 <h5>Username</h5>
-<pre>{{ myForm.controls["username"].value  | json }}</pre>
+<pre>{{ myForm.controls["username"].errors | json }}</pre>
 
 <h5>Password</h5>
-<pre>{{ myForm.controls["password"].value   | json }}</pre>
+<pre>{{ myForm.controls["password"].errors | json }}</pre>
 
 <h5>Confirmar</h5>
-<pre>{{ myForm.controls["password"].value  | json }}</pre>
+<pre>{{ myForm.controls["password2"].errors | json }}</pre>
