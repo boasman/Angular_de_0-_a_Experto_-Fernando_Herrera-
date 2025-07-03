@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { HousesPageComponent } from './houses-page.component';
+import { MiniMapsComponent } from './mini-maps.component';
 
-describe('HousesPageComponent', () => {
-  let component: HousesPageComponent;
-  let fixture: ComponentFixture<HousesPageComponent>;
+describe('MiniMapsComponent', () => {
+  let component: MiniMapsComponent;
+  let fixture: ComponentFixture<MiniMapsComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ HousesPageComponent ]
+      declarations: [ MiniMapsComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HousesPageComponent);
+    fixture = TestBed.createComponent(MiniMapsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
