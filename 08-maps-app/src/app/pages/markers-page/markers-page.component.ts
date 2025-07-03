@@ -7,13 +7,22 @@ import {
   signal,
   viewChild,
 } from '@angular/core';
-import mapboxgl from 'mapbox-gl';
+import mapboxgl, { LngLatLike } from 'mapbox-gl';
 import { environment } from '../../../environments/environment.development';
+import { v4 as UUIv4 } from 'uuid';
+import { JsonPipe } from '@angular/common';
+import { filter } from 'rxjs';
 
 mapboxgl.accessToken = environment.mapboxKey;
 
+interface Marker {
+  id: string;
+  mapboxMarker: mapboxgl.Marker;
+}
+
 @Component({
   standalone: true,
+  imports: [JsonPipe],
   selector: 'app-markers-page',
   templateUrl: './markers-page.component.html',
   styleUrls: ['./markers-page.component.css'],
@@ -23,6 +32,7 @@ export class MarkersPageComponent implements OnInit, AfterViewInit {
 
   zoom = signal(14);
   map = signal<mapboxgl.Map | null>(null);
+  markers = signal<Marker[]>([]);
 
   constructor() {}
 
@@ -63,11 +73,45 @@ export class MarkersPageComponent implements OnInit, AfterViewInit {
   }
 
   mapClick(event: mapboxgl.MapMouseEvent) {
+    if (!this.map()) return;
+
+    const map = this.map()!;
 
     const color = '#xxxxxx'.replace(/x/g, (y) =>
       ((Math.random() * 16) | 0).toString(16)
     );
 
+    const marker = new mapboxgl.Marker({
+      draggable: false,
+      color: color,
+    })
+      .setLngLat(event.lngLat)
+      .addTo(map);
+
+    const newMarker: Marker = {
+      id: UUIv4(),
+      mapboxMarker: marker,
+    };
+
+    this.markers.set([newMarker, ...this.markers()]);
+
+    console.log(this.markers());
+  }
+
+  flyToMarker(lnglat: LngLatLike) {
+    if (!this.map()) return;
+    this.map()?.flyTo({
+      center:lnglat
+    })
+  }
+
+  deleteMarker(marker: Marker){
+
+    if(!this.map()) return;
+    const map = this.map();
+    marker.mapboxMarker.remove();
+
+    this.markers.set(this.markers().filter(m => m.id !== marker.id))
 
   }
 }
