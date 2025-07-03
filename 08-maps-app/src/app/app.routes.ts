@@ -9,19 +9,18 @@ export const routes: Routes = [
     component: FullScreenMapPageComponent,
     title: 'FullScreen Map'
   },
-   {
+  {
     path: 'markers',
     component: MarkersPageComponent,
     title: 'Marcadores'
   },
-   {
+  {
     path: 'houses',
     component: HousesPageComponent,
     title: 'Propiedades disponible'
   },
-   {
+  {
     path: '**',
-    redirectTo: 'fullscreen'    
+    redirectTo: 'fullscreen',
   },
-
 ];
