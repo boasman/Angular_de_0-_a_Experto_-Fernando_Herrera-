@@ -2,10 +2,12 @@ import { SlicePipe } from '@angular/common';
 import { Component, computed, input, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { Product } from '@products//interfaces/product.interfaces';
+import { ProductImagePipe } from '@products//pipes/product-image.pipe';
+
 
 @Component({
   standalone: true,
-  imports: [RouterLink, SlicePipe],
+  imports: [RouterLink, SlicePipe,ProductImagePipe],
   selector: 'product-card',
   templateUrl: './product-card.component.html',
 })
