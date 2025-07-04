@@ -1,10 +1,7 @@
-
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ProductCardComponent } from '@products//components/product-card/product-card.component';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { ProductsService } from '@products//services/products.service';
-
-
 
 
 @Component({
@@ -14,14 +11,16 @@ import { ProductsService } from '@products//services/products.service';
   templateUrl: './home-page.component.html',
 })
 export class HomePageComponent {
+  query = signal<string>('');
 
-   //npm install -g @angular/cli@latest
+  //npm install -g @angular/cli@latest
+
+  //products = signal<>
 
   productService = inject(ProductsService);
 
-  productsResource = rxResource({
-    loader: () => this.productService.getProducts()
+  productResource = rxResource({
+    params: () => ({}),
+    stream: ({params}) => this.productService.getProducts({}),
   });
-
-
 }

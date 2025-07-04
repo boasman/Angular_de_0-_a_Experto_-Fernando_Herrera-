@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, input, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
 @Component({
@@ -13,5 +13,10 @@ export class ProductCardComponent implements OnInit {
 
   ngOnInit() {
   }
+
+    title = input.required<string>();
+   description = input.required<string>();
+
+
 
 }
