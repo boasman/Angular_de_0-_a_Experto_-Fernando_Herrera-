@@ -2,12 +2,14 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { ActivatedRoute } from '@angular/router';
 import { ProductsService } from '@products//services/products.service';
+import { ProductCaraouselComponent } from "../../../products/components/product-caraousel/product-caraousel.component";
 
 @Component({
   standalone: true,
   selector: 'app-product-page',
   templateUrl: './product-page.component.html',
   styleUrls: ['./product-page.component.css'],
+  imports: [ProductCaraouselComponent],
 })
 export class ProductPageComponent {
   ActivatedRoute = inject(ActivatedRoute);

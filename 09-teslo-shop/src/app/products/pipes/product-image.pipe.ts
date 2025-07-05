@@ -10,8 +10,6 @@ const baseUrl = environment.baseUrl;
 export class ProductImagePipe implements PipeTransform {
   transform(value: string | string[]): any {
     if (typeof value === 'string') {
-      console.log("entro en el 1");
-      console.log("entro en el 1: ", value);
       return `${baseUrl}/files/product/${value}`;
     }
 

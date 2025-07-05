@@ -11,9 +11,7 @@ import { ProductsService } from '@products//services/products.service';
   templateUrl: './home-page.component.html',
 })
 export class HomePageComponent {
-  query = signal<string>('');
-
-  //npm install -g @angular/cli@latest
+  //query = signal<string>('');
 
   //products = signal<>
 
