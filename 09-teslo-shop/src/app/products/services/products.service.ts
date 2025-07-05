@@ -1,7 +1,7 @@
 import { observable } from './../../../../../10-nest-teslo-shop-complete-backend-paginated/node_modules/rxjs/src/internal/symbol/observable';
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { ProductsResponse } from '../interfaces/product.interfaces';
+import { Product, ProductsResponse } from '../interfaces/product.interfaces';
 import { Observable, tap } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 
@@ -32,5 +32,9 @@ export class ProductsService {
         },
       })
       .pipe(tap((resp) => console.log({ resp })));
+  }
+
+  getProductByIdSlug(idSlug: string): Observable<Product>{
+    return this.http.get<Product>(`${baseUrl}/products/${idSlug}`)
   }
 }
