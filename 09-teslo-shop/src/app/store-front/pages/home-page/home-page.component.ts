@@ -2,11 +2,13 @@ import { Component, inject, signal } from '@angular/core';
 import { ProductCardComponent } from '@products//components/product-card/product-card.component';
 import { rxResource } from '@angular/core/rxjs-interop';
 import { ProductsService } from '@products//services/products.service';
+import { PaginationComponent } from '@shared/components/pagination/pagination.component';
+
 
 
 @Component({
   standalone: true,
-  imports: [ProductCardComponent],
+  imports: [ProductCardComponent, PaginationComponent],
   selector: 'app-home-page',
   templateUrl: './home-page.component.html',
 })
