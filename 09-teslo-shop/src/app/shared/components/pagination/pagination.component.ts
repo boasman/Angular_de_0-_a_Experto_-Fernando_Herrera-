@@ -1,7 +1,9 @@
-import { Component, computed, input, OnInit } from '@angular/core';
+import { Component, computed, input, linkedSignal, OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
 
 @Component({
   standalone: true,
+  imports: [RouterLink],
   selector: 'shared-pagination',
   templateUrl: './pagination.component.html',
 
@@ -10,6 +12,8 @@ export class PaginationComponent  {
 
   pages = input(0);
   currentPage = input<number>(1);
+
+  activePage = linkedSignal(this.currentPage);
 
 
   getPagesList = computed(() => {
