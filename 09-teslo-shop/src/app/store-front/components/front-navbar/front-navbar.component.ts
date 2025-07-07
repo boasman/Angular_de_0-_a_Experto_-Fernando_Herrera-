@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
+import { AuthService } from '@auth/services/auth.service';
 
 @Component({
   standalone: true,
@@ -8,11 +9,10 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   templateUrl: './front-navbar.component.html',
 
 })
-export class FrontNavbarComponent implements OnInit {
+export class FrontNavbarComponent  {
 
-  constructor() { }
+  authService = inject(AuthService);
 
-  ngOnInit() {
-  }
+
 
 }
