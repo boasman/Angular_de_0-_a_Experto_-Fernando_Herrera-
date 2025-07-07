@@ -2,7 +2,7 @@ import { observable } from './../../../../../10-nest-teslo-shop-complete-backend
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Product, ProductsResponse } from '../interfaces/product.interfaces';
-import { Observable, of, tap } from 'rxjs';
+import { delay, Observable, of, tap } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
 
 const baseUrl = environment.baseUrl;
@@ -20,15 +20,15 @@ export class ProductsService {
   private http = inject(HttpClient);
 
   private ProductsCache = new Map<string, ProductsResponse>();
+  private ProductCache = new Map<string, Product>();
 
   getProducts(options: Options): Observable<ProductsResponse> {
-
     const { limit = 9, offset = 0, gender = '' } = options;
 
     const key = `${limit}-${offset}-${gender}`; //9-0-''
 
-    if(this.ProductsCache.has(key)){
-      return of(this.ProductsCache.get(key)!)
+    if (this.ProductsCache.has(key)) {
+      return of(this.ProductsCache.get(key)!);
     }
 
     return this.http
@@ -40,12 +40,20 @@ export class ProductsService {
         },
       })
       .pipe(
-        tap((resp) => console.log(resp )),
+        tap((resp) => console.log(resp)),
         tap((resp) => this.ProductsCache.set(key, resp))
       );
   }
 
-  getProductByIdSlug(idSlug: string): Observable<Product>{
+  getProductByIdSlug(idSlug: string): Observable<Product> {
+
+    if (this.ProductCache.has(idSlug)) {
+      return of(this.ProductCache.get(idSlug)!);
+    }
     return this.http.get<Product>(`${baseUrl}/products/${idSlug}`)
+    .pipe(
+      tap((product) => this.ProductCache.set(idSlug,product))
+    );
+
   }
 }
