@@ -6,8 +6,6 @@ export const routes: Routes = [
   {
     path: 'auth',
     loadChildren: () => import('./auth/auth.routing'),
-
-    //TODO: Guards
     canMatch: [
       // () => {
       //   console.log("Hola Mundo");
@@ -17,6 +15,10 @@ export const routes: Routes = [
       NotAuthenticatedGuard
     ]
 
+  },
+  {
+    path: 'admin',
+    loadChildren: () => import('./admin-dashboard/admin-dasboard.route'),
   },
   {
     path: '',
