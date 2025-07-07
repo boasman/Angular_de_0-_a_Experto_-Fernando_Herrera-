@@ -2,11 +2,13 @@ import { Routes } from '@angular/router';
 import { ProductsAdminPageComponent } from './pages/products-admin-page/products-admin-page.component';
 import { AdminDashboardLayoutComponent } from './layouts/admin-dashboard-layout/admin-dashboard-layout.component';
 import { ProductAdminPageComponent } from './pages/product-admin-page/product-admin-page.component';
+import { isAdmingGuard } from '@auth/guards/is-admin.guard';
 
 export const adminDasboardRoutes: Routes = [
   {
     path: '',
     component: AdminDashboardLayoutComponent,
+    canMatch: [isAdmingGuard],
     children: [
       {
         path: 'products',
@@ -18,8 +20,8 @@ export const adminDasboardRoutes: Routes = [
       },
       {
         path: '**',
-        redirectTo: 'products'
-      }
+        redirectTo: 'products',
+      },
     ],
   },
 ];

@@ -1,10 +1,10 @@
 import { Component, computed, inject, OnInit } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 import { AuthService } from '@auth/services/auth.service';
 
 @Component({
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, RouterLink, RouterLinkActive],
   selector: 'app-admin-dashboard-layout',
   templateUrl: './admin-dashboard-layout.component.html',
 })
