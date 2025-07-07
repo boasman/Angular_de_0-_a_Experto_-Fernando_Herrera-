@@ -1,6 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AuthService } from '@auth/services/auth.service';
 
 
 @Component({
@@ -11,9 +12,12 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 })
 export class LoginPageComponent {
 
+  authService = inject(AuthService);
+
   fb = inject(FormBuilder);
   hasError = signal(false);
   isPosting = signal(false)
+  router = inject(Router);
 
   loginForm = this.fb.group({
     email: ['',[Validators.required, Validators.email]],
@@ -23,23 +27,35 @@ export class LoginPageComponent {
 
   onSubmit(){
 
-    console.log("Entro aqui ")
-
     if(this.loginForm.invalid){
       this.hasError.set(true),
-      setTimeout(() => {
-        this.hasError.set(false);
-      }, 2000);
-
+      this.Error();
       return;
     }
 
-    const {email='', password= ''} = this.loginForm.value;
+    const {email ='', password = ''} = this.loginForm.value;
 
-    console.log({email,password});
+
+    this.authService.login(email!,password!)
+    .subscribe(isAuthenticated => {
+
+      if(isAuthenticated){
+        this.router.navigateByUrl('/');
+        return;
+      }
+
+      this.hasError.set(true),
+        this.Error();
+    })
+
 
   }
 
+  Error(){
+    setTimeout(() => {
+        this.hasError.set(false);
+      }, 2000);
+  }
 
 
 }
