@@ -1,5 +1,5 @@
 import { Component, inject, input, OnInit, signal } from '@angular/core';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, UntypedFormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ProductCaraouselComponent } from '@products//components/product-caraousel/product-caraousel.component';
 import { Product } from '@products//interfaces/product.interfaces';
@@ -26,7 +26,7 @@ export class ProductDetailsComponent implements OnInit {
   router = inject(Router);
   wasSaved = signal(false);
 
-  imageFileList = signal<FileList |  null>(null);
+  imageFileList = signal<FileList |  undefined>(undefined);
   tempImages = signal<string[]>([]);
 
   productForm = this.fb.group({
@@ -59,6 +59,8 @@ export class ProductDetailsComponent implements OnInit {
   }
 
   async onSubmit() {
+
+
     const isValid = this.productForm.valid;
     this.productForm.markAllAsTouched();
 
@@ -76,14 +78,14 @@ export class ProductDetailsComponent implements OnInit {
 
     if (this.product().id === 'new') {
       const product = await firstValueFrom(
-        this.productService.createProduct(productLike)
+        this.productService.createProduct(productLike, this.imageFileList())
       );
       //Crear producto
 
       this.router.navigate(['/admin/products', product.id]);
     } else {
       await firstValueFrom(
-        this.productService.updateProduct(this.product().id, productLike)
+        this.productService.updateProduct(this.product().id, productLike, this.imageFileList())
       );
     }
 
@@ -108,7 +110,7 @@ export class ProductDetailsComponent implements OnInit {
 
   //Images
   onFilesChange(event: Event) {
-    const filesList = (event.target as HTMLInputElement).files;
+    const filesList = (event.target as HTMLInputElement).files ?? undefined;
     this.imageFileList.set(filesList);
     this.tempImages.set([]);
 
