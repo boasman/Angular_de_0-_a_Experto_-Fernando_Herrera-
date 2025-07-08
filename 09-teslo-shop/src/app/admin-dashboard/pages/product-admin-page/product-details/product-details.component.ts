@@ -1,0 +1,104 @@
+import { Component, inject, input, OnInit } from '@angular/core';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ProductCaraouselComponent } from '@products//components/product-caraousel/product-caraousel.component';
+import { Product } from '@products//interfaces/product.interfaces';
+import { ProductsService } from '@products//services/products.service';
+import { FormErrorLabelComponent } from '@shared/components/form-error-label/form-error-label.component';
+import { FormUtils } from 'src/app/utils/form-utils';
+
+@Component({
+  standalone: true,
+  imports: [
+    ProductCaraouselComponent,
+    ReactiveFormsModule,
+    FormErrorLabelComponent,
+  ],
+  selector: 'product-details',
+  templateUrl: './product-details.component.html',
+})
+export class ProductDetailsComponent implements OnInit {
+  product = input.required<Product>();
+
+  fb = inject(FormBuilder);
+  productService = inject(ProductsService);
+  router = inject(Router);
+
+  productForm = this.fb.group({
+    title: ['', [Validators.required]],
+    description: ['', [Validators.required]],
+    slug: [
+      '',
+      [Validators.required, Validators.pattern(FormUtils.slugPattern)],
+    ],
+    price: [0, [Validators.required, Validators.min(0)]],
+    stock: [0, [Validators.required, Validators.min(0)]],
+    sizes: [['']],
+    images: [[]],
+    tags: [''],
+    gender: ['men', [Validators.pattern(/men|women|kid|unisex/)]],
+  });
+
+  sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+
+  ngOnInit(): void {
+    this.setFormValue(this.product());
+
+    //this.productForm.reset(this.product() as any);
+  }
+
+  setFormValue(formlike: Partial<Product>) {
+    this.productForm.reset(this.product() as any);
+    //this.productForm.patchValue(formlike as any);
+    this.productForm.patchValue({ tags: formlike.tags?.join(',') });
+  }
+
+  onSubmit() {
+    const isValid = this.productForm.valid;
+    this.productForm.markAllAsTouched();
+
+    if (!isValid) return;
+    const formValue = this.productForm.value;
+
+    const productLike: Partial<Product> = {
+      ...(formValue as any),
+      tags:
+        formValue.tags
+          ?.toLowerCase()
+          .split(',')
+          .map((tag) => tag.trim()) ?? [],
+    };
+
+    if (this.product().id === 'new') {
+      //Crear producto
+      this.productService
+        .createProduct(productLike)
+        .subscribe((producto) => {
+          console.log('Producto creado: ', producto);
+          this.router.navigate(['/admin/products', producto.id])
+        });
+    }
+
+    else {
+      this.productService
+        .updateProduct(this.product().id, productLike)
+        .subscribe((producto) => {
+          console.log('Producto actualizado: ', producto);
+        });
+    }
+
+    // console.log({productLike});
+  }
+
+  onSizeClicked(size: string) {
+    const currentSize = this.productForm.value.sizes ?? [];
+
+    if (currentSize.includes(size)) {
+      currentSize.splice(currentSize.indexOf(size), 1);
+    } else {
+      currentSize.push(size);
+    }
+
+    this.productForm.patchValue({ sizes: currentSize });
+  }
+}

@@ -10,6 +10,14 @@
       class="w-full object-cover">
     </div>
     }
+    @empty {
+
+          <div class="swiper-slide">
+      <img [src]="'' | productImage" alt="Producto"
+      class="w-full object-cover">
+    </div>
+
+    }
 
     <!-- <div class="swiper-slide">Slide 2</div>
     <div class="swiper-slide">Slide 3</div> -->

@@ -8,7 +8,6 @@ import { ProductCaraouselComponent } from "../../../products/components/product-
   standalone: true,
   selector: 'app-product-page',
   templateUrl: './product-page.component.html',
-  styleUrls: ['./product-page.component.css'],
   imports: [ProductCaraouselComponent],
 })
 export class ProductPageComponent {
