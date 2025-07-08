@@ -1,10 +1,11 @@
-import { Component, inject, input, OnInit } from '@angular/core';
+import { Component, inject, input, OnInit, signal } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ProductCaraouselComponent } from '@products//components/product-caraousel/product-caraousel.component';
 import { Product } from '@products//interfaces/product.interfaces';
 import { ProductsService } from '@products//services/products.service';
 import { FormErrorLabelComponent } from '@shared/components/form-error-label/form-error-label.component';
+import { firstValueFrom, single } from 'rxjs';
 import { FormUtils } from 'src/app/utils/form-utils';
 
 @Component({
@@ -23,6 +24,7 @@ export class ProductDetailsComponent implements OnInit {
   fb = inject(FormBuilder);
   productService = inject(ProductsService);
   router = inject(Router);
+  wasSaved = signal(false);
 
   productForm = this.fb.group({
     title: ['', [Validators.required]],
@@ -53,7 +55,7 @@ export class ProductDetailsComponent implements OnInit {
     this.productForm.patchValue({ tags: formlike.tags?.join(',') });
   }
 
-  onSubmit() {
+  async onSubmit() {
     const isValid = this.productForm.valid;
     this.productForm.markAllAsTouched();
 
@@ -70,24 +72,22 @@ export class ProductDetailsComponent implements OnInit {
     };
 
     if (this.product().id === 'new') {
+      const product = await firstValueFrom(
+        this.productService.createProduct(productLike)
+      );
       //Crear producto
-      this.productService
-        .createProduct(productLike)
-        .subscribe((producto) => {
-          console.log('Producto creado: ', producto);
-          this.router.navigate(['/admin/products', producto.id])
-        });
+
+      this.router.navigate(['/admin/products', product.id]);
+    } else {
+      await firstValueFrom(
+        this.productService.updateProduct(this.product().id, productLike)
+      );
     }
 
-    else {
-      this.productService
-        .updateProduct(this.product().id, productLike)
-        .subscribe((producto) => {
-          console.log('Producto actualizado: ', producto);
-        });
-    }
-
-    // console.log({productLike});
+    this.wasSaved.set(true);
+    setTimeout(() => {
+      this.wasSaved.set(false);
+    }, 2000);
   }
 
   onSizeClicked(size: string) {
