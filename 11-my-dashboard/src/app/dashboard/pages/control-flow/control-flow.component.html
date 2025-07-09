@@ -1,3 +1,79 @@
-<p>
-  control-flow works!
-</p>
+<app-title [title]="'Control Flow'"></app-title>
+
+<section class="grid grid-cols-1 md:grid-cols-2 gap-3">
+  <!-- ngif @if -->
+  <div class="bg-white rounded shadow p-10">
+    <h2 class="text-2xl font-bold mb-5">if: {{ showContent() }}</h2>
+
+    <button
+      (click)="toogleContent()"
+      class="p-2 bg-blue-500 rounded text-white cursor-pointer"
+    >
+      Click me
+    </button>
+
+    @if(showContent()){
+    <p>Hola Mundo</p>
+    } @else {
+    <p>********</p>
+    }
+  </div>
+
+  <!-- @switch -->
+  <div class="bg-white rounded shadow p-10">
+    @switch (grade()) { @case ('A') {
+    <p>
+      Arriba de 90 <span>{{ grade() }}</span>
+    </p>
+    } @case ('B') {
+    <p>
+      Arriba de 80 <span>{{ grade() }}</span>
+    </p>
+
+    } @default {
+    <p>La nota no existe</p>
+    } }
+
+    <!-- <button
+      class="p-2 bg-blue-500 rounded text-white cursor-pointer"
+      (click)="grade.set('B')"
+    >
+      Nota B
+    </button>
+    <br />
+    <button
+      class="p-2 bg-blue-500 rounded text-white cursor-pointer"
+      (click)="grade.set('F')"
+    >
+      Nota F
+    </button> -->
+
+    <!--@for-->
+  </div>
+  <div class="bg-white rounded shadow p-10">
+    <ol>
+      @for (item of framwork(); track item;
+      let i = $index, first = $first, even = $even, count = $count, last = $last, odd = $odd) {
+
+      <li [class]="{
+        'bg-red-100': even && !first && !last,
+        'bg-purple-100': odd && !first && !last,
+        'bg-blue-100': first || last
+
+      }">{{i +  1 }}/{{count}} - {{ item }}</li>
+
+      }
+    </ol>
+  </div>
+  <div class="bg-white rounded shadow p-10">
+    <ol>
+      @for (item of framwork2(); track item) {
+
+      <li>{{ item }}</li>
+
+      }@empty {
+        <li>No hay elementos en el arreglo</li>
+      }
+    </ol>
+  </div>
+</section>
