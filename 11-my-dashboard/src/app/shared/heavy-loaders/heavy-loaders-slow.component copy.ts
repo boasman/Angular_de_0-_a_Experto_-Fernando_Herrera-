@@ -1,13 +1,33 @@
-import { Component, OnInit } from '@angular/core';
+import { CommonModule, NgClass } from '@angular/common';
+import { Component, Input, input, OnInit, ɵsetClassDebugInfo } from '@angular/core';
 
 @Component({
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   selector: 'app-heavy-loaders-slow',
-  template: ` <h1>Hola Mundo</h1> `,
+  template: ` <section [ngClass]="['w-full h-[600px]', cssClass]">
+    heavy loader slow
+  </section> `,
 })
-export class HeavyLoadersSlowComponent implements OnInit {
-  constructor() {}
+export class HeavyLoadersSlowComponent  {
 
-  ngOnInit() {}
+
+  @Input({required: true}) cssClass!: string;
+
+
+
+
+  constructor() {
+
+
+    const start = Date.now();
+
+    while(Date.now() -  start < 3000){
+
+    }
+
+    console.log('Cargado');
+
+  }
+
 }

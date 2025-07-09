@@ -1,17 +1,28 @@
-import { Handler } from './../../../../node_modules/node-gyp/node_modules/tar/dist/commonjs/path-reservations.d';
-import { Component, OnInit } from '@angular/core';
+import { CommonModule, NgClass } from '@angular/common';
+import { Component, input, OnInit } from '@angular/core';
+
 
 @Component({
   standalone: true,
-  imports:[],
+  imports:[CommonModule],
   selector: 'app-heavy-loaders-fast',
   template: `
-    <h1>Hola Mundo</h1>
+    <section [ngClass]="['w-full', cssClass()]">
+
+      <ng-content>
+
+      </ng-content>
+
+    </section>
   `
 })
 export class HeavyLoadersFastComponent implements OnInit {
 
-  constructor() { }
+  cssClass = input.required<string>();
+
+  constructor() {
+    console.log("HeavyLoader fast Creado")
+   }
 
   ngOnInit() {
   }
